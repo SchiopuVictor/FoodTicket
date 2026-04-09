@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: FoodTicket
+  datasource:
+    username: root
+    password: admin123
+    url: jdbc:mysql://localhost:3306/FoodTicket?crateDatabaseIfNotExist=true;
