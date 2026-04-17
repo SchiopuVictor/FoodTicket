@@ -38,6 +38,7 @@ public class Order {
     @Column(name = "cashier_name")
     private String cashierName;
 
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "order_id")
     private Set<OrderItem> orderItems = new LinkedHashSet<>();

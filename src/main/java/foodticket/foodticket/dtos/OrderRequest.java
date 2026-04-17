@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -18,5 +19,6 @@ public class OrderRequest {
     private PaymentMethod paymentMethod;
     private Status status;
     private String cashierName;
+    private List<OrderItemRequest> itemRequest;
 
 }

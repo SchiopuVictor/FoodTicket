@@ -17,10 +17,11 @@ public class OrderMapper {
     }
 
     public static Order toEntity(OrderRequest request) {
-        return Order.builder().cashierName(request.getCashierName())
+        return Order.builder()
+                .cashierName(request.getCashierName())
                 .dateTime(request.getDateTime())
-                .paymentMethod(request.getPaymentMethod())
                 .status(request.getStatus())
+                .paymentMethod(request.getPaymentMethod())
                 .build();
     }
 }
