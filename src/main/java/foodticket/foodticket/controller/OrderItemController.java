@@ -59,5 +59,26 @@ public class OrderItemController {
         return ResponseEntity.ok("Comanda finalizata!!");
     }
 
+    @GetMapping("/{id}/pdf")
+    public ResponseEntity<byte[]> downloadPdf(@PathVariable Long id) {
+
+        byte[] pdf = orderItemService.createPdf(id);
+        return ResponseEntity.ok()
+                .header("Content-Type", "application/pdf")
+                .header("Content-Disposition", "attachment; filename=ticket.pdf")
+                .body(pdf);
+
+    }
+
+
+    @GetMapping("/{id}/view")
+    public ResponseEntity<byte[]> previewPdf(@PathVariable Long id) {
+        byte[] pdf = orderItemService.createPdf(id);
+        return ResponseEntity.ok()
+                .header("Content-Type", "application/pdf")
+                .header("Content-Disposition", "inline;filename=ticket.pdf")
+                .body(pdf);
+    }
+
 
 }
