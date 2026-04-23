@@ -19,6 +19,7 @@ public class OrderItemService {
     private final OrderRespository orderRespository;
     private final ProductRespository productRespository;
     private final OrderItemRepository orderItemRepository;
+    private final OrderItemPDFService orderItemPDFService;
 
     @Transactional
     public OrderItem createOrderItem(OrderItemRequest request) {
@@ -95,6 +96,14 @@ public class OrderItemService {
         order.setPaymentMethod(paymentMethod);
         order.setStatus(Status.FINALIZED);
         orderRespository.save(order);
+    }
+
+    public byte[] createPdf(Long id) {
+        OrderItem orderItem = orderItemRepository.findById(id)
+                .orElseThrow(OrderItemNotFoundException::new);
+
+        return orderItemPDFService.createPdf(orderItem);
+
     }
 
 }

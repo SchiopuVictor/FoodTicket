@@ -41,7 +41,7 @@ public class OrderController {
                 .ok(OrderMapper
                         .toDto(orderService
                                 .updateOrder(id, request)));
-        
+
     }
 
     @DeleteMapping("/{id}")
@@ -49,6 +49,10 @@ public class OrderController {
         orderService.deleteOrder(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+/*
+Mia ramas sa fac printarea ticketului de la ghiseu!!!!
 
+
+ */
 
 }
