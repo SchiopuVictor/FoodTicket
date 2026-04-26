@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/product")
 @RequiredArgsConstructor
@@ -18,30 +21,37 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductResponse> createProduct(
-            @Valid @RequestBody ProductRequest request)
-    {
-       return ResponseEntity.ok(ProductMapper
-               .toDto(productService.createProduct(request)));
+            @Valid @RequestBody ProductRequest request) {
+        return ResponseEntity.ok(ProductMapper
+                .toDto(productService.createProduct(request)));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductResponse> getProduct(@PathVariable Long id)
-    {
-     return ResponseEntity.ok(ProductMapper
-             .toDto(productService.getProduct(id)));
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable Long id) {
+        return ResponseEntity.ok(ProductMapper
+                .toDto(productService.getProduct(id)));
     }
 
     @PutMapping("/{id}")
     private ResponseEntity<ProductResponse> updateProduct(
-            @PathVariable Long id, @RequestBody ProductRequest request)
-    {
-           return ResponseEntity.ok(ProductMapper
-                   .toDto(productService.updateProduct(id, request)));
+            @PathVariable Long id, @RequestBody ProductRequest request) {
+        return ResponseEntity.ok(ProductMapper
+                .toDto(productService.updateProduct(id, request)));
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<Void> deleteProduct(@PathVariable Long id){
+    private ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ProductResponse>> getAllProducts() {
+        return ResponseEntity.ok(
+                productService
+                        .getAllProducts()
+                        .stream()
+                        .map(ProductMapper::toDto)
+                        .collect(Collectors.toList()));
     }
 }

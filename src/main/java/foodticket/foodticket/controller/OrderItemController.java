@@ -11,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/orderItem")
 @RequiredArgsConstructor
@@ -80,5 +83,13 @@ public class OrderItemController {
                 .body(pdf);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<OrderItemResponse>> getAllOrderItems() {
+        return ResponseEntity.ok(orderItemService
+                .getAllOrderItems()
+                .stream()
+                .map(OrderItemMapper::toDto)
+                .collect(Collectors.toList()));
+    }
 
 }
