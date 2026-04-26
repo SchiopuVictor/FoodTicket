@@ -13,6 +13,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class OrderItemService {
@@ -104,6 +106,10 @@ public class OrderItemService {
 
         return orderItemPDFService.createPdf(orderItem);
 
+    }
+
+    public List<OrderItem> getAllOrderItems() {
+        return orderItemRepository.findAll();
     }
 
 }

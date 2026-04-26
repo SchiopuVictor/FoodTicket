@@ -9,6 +9,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -45,6 +47,10 @@ public class ProductService {
         Product product = productRespository.findById(id)
                 .orElseThrow(ProductNotFoundException::new);
         productRespository.delete(product);
+    }
+
+    public List<Product> getAllProducts() {
+        return productRespository.findAll();
     }
 
 

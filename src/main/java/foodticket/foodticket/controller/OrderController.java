@@ -9,12 +9,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tools.jackson.databind.cfg.MapperBuilder;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/order")
 public class OrderController {
     private final OrderService orderService;
+    private final MapperBuilder mapperBuilder;
 
     @PostMapping
     public ResponseEntity<OrderResponse> createOrder(
@@ -49,10 +54,15 @@ public class OrderController {
         orderService.deleteOrder(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-/*
-Mia ramas sa fac printarea ticketului de la ghiseu!!!!
 
-
- */
+    @GetMapping("/all")
+    public ResponseEntity<List<OrderResponse>> getAllOrders() {
+        return ResponseEntity.ok(
+                orderService.getAllOrders()
+                        .stream()
+                        .map(OrderMapper::toDto)
+                        .collect(Collectors.toList())
+        );
+    }
 
 }
